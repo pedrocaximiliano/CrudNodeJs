@@ -54,11 +54,18 @@ class PointsControllers {
             startDate,
             categories_id: category
         })
-        if (courses.length > 0) {
+       const validation = course.name === '' || course.startDate === 'Invalid date' || course.endDate === 'Invalid date';
+        if (validation) {
+            return res.json({
+                status: 500,
+                message: 'preencha os campos'
+             });
+        } else if (courses.length > 0) {
             return res.json({
                 status: 400,
                 message: 'já existe curso para essa data'
-             });
+             })
+
         } else {
         const trx = await knex.transaction();
         const insertedIds = await trx('courses').insert(course);
