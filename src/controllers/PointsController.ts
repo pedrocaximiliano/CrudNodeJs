@@ -21,19 +21,29 @@ class PointsControllers {
     async update(req: express.Request, res: express.Response) {
         const { id } = req.params;
         const { name, startDate, endDate } = req.body;
-        const parsedItens = String(startDate);
         const trx = await knex.transaction();
         const course = {
-            name:
+            name,
             startDate,
             endDate,
         };
-        
+        console.log('c', course)
+        const validation = course.name === '' || course.startDate === 'Invalid date' || course.endDate === 'Invalid date';
+        console.log('ss', validation)
+        if (validation) {
+            return res.json({
+                status: 500,
+                message: 'preencha os campos'
+             });
+        } else {
         await trx('courses').update({name, startDate, endDate})
         .where('id', id);
         await trx.commit();
 
         return res.json({message: id, ...course});
+        }
+        
+        
     };
 
     async create(req: express.Request, res: express.Response) {
