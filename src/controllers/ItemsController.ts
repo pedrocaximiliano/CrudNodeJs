@@ -11,7 +11,7 @@ class ItemsController {
            return {
               id: category.id,
               code:category.code,
-              description: category.description,
+              title: category.title,
            };
         });
         return response.json(serializedCategories);

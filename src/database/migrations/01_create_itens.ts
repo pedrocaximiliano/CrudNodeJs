@@ -5,7 +5,7 @@ export async function up(knex: Knex) {
     return knex.schema.createTable('categories', table => {
         table.increments('id').primary();
         table.string('code').notNullable();
-        table.string('description').notNullable();
+        table.string('title').notNullable();
     });
 }
 
