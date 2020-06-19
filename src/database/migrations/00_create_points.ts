@@ -7,6 +7,7 @@ export async function up(knex: Knex) {
         table.string('name').notNullable();
         table.dateTime('startDate').notNullable();
         table.dateTime('endDate').notNullable();
+        table.dateTime('description').notNullable();
     });
 }
 

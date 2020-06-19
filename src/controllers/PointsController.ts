@@ -28,8 +28,7 @@ class PointsControllers {
             endDate,
         };
         console.log('c', course)
-        const validation = course.name === '' || course.startDate === 'Invalid date' || course.endDate === 'Invalid date';
-        console.log('ss', validation)
+        const validation = course.name === '' || course.startDate === 'Invalid date' || course.endDate === 'Invalid date' || course.description === '';
         if (validation) {
             return res.json({
                 status: 500,
@@ -52,11 +51,13 @@ class PointsControllers {
             startDate,
             endDate,
             category,
+            description
         } = req.body;
         const course = {
             name,
             startDate,
             endDate,
+            description,
         };
         const courses = await knex('courses')
         .join('course_categories', 'courses.id', '=', 'course_categories.courses_id')
@@ -64,7 +65,7 @@ class PointsControllers {
             startDate,
             categories_id: category
         })
-       const validation = course.name === '' || course.startDate === 'Invalid date' || course.endDate === 'Invalid date';
+       const validation = course.name === '' || course.startDate === 'Invalid date' || course.endDate === 'Invalid date' || course.description === '';
         if (validation) {
             return res.json({
                 status: 500,
@@ -119,7 +120,7 @@ class PointsControllers {
         } else {
             const point = await knex('courses').delete();
             const categories = await knex('course_categories').delete();
-            return res.json({message: "curso deletado tudo deletado" });
+            return res.json({message: "todos cursos deletado" });
         }
 
     };
