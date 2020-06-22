@@ -40,7 +40,7 @@ class PointsControllers {
         .join('course_categories', 'courses.id', '=', 'course_categories.courses_id')
         .select('courses.*', 'course_categories.*').where({
             startDate,
-            categories_id: category
+            categories_id: id
         })
         const validation = course.name === '' || course.startDate === 'Invalid date' || course.endDate === 'Invalid date' || course.description === '';
         if (validation) {
@@ -56,7 +56,7 @@ class PointsControllers {
         } else {
         const trx = await knex.transaction();
 
-        await trx('courses').update({name, startDate, endDate})
+        await trx('courses').update({name, startDate, endDate, description})
         .where('id', id);
         await trx.commit();
 
